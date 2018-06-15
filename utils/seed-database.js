@@ -23,18 +23,13 @@ mongoose.connect(MONGODB_URI)
   .then(() => {
     console.info('Seeding Database');
     return Promise.all([
-
       Note.insertMany(seedNotes),
-
       Folder.insertMany(seedFolders),
       Folder.createIndexes(),
-
       Tag.insertMany(seedTags),
       Tag.createIndexes(),
-
       User.insertMany(seedUsers),
       User.createIndexes()
-
     ]);
   })
   .then(() => {
