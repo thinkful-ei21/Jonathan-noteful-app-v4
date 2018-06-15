@@ -16,6 +16,21 @@ const tagsRouter = require('./routes/tags');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 
+// Console.log HACK - tells you when it was written and what line the log is on.
+// found at: https://gist.github.com/bioid/43bf523abe41576f04844733d663c8ff
+
+['log', 'warn', 'error'].forEach(function(method) {
+  var old = console[method];
+  console[method] = function() {
+    var stack = (new Error()).stack.split(/\n/);
+    var date = new Date();
+    var datetime = date.toLocaleString('en-US');
+    var args = [].slice.apply(arguments).concat([stack[1].trim()]);
+    args.unshift(datetime);
+    return old.apply(console, args);
+  };
+});
+
 // Create an Express application
 const app = express();
 
@@ -54,7 +69,7 @@ app.use((err, req, res, next) => {
     const errBody = Object.assign({}, err, { message: err.message });
     res.status(err.status).json(errBody);
   } else {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
@@ -68,13 +83,13 @@ if (process.env.NODE_ENV !== 'test') {
       console.info(`Connected to: mongodb://${conn.host}:${conn.port}/${conn.name}`);
     })
     .catch(err => {
-      console.error(err);
+      // console.error(err);
     });
 
   app.listen(PORT, function () {
     console.info(`Server listening on ${this.address().port}`);
   }).on('error', err => {
-    console.error(err);
+    // console.error(err);
   });
 }
 
