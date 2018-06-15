@@ -24,7 +24,7 @@ const seedFolders = require('../db/seed/folders');
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe.only('Noteful API - Notes', function () {
+describe('Noteful API - Notes', function () {
 
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI)
@@ -227,7 +227,7 @@ describe.only('Noteful API - Notes', function () {
 
   });
 
-  describe.only('POST /api/notes', function () {
+  describe('POST /api/notes', function () {
 
     it('should create and return a new item when provided valid data', function () {
       const newItem = {
@@ -269,7 +269,7 @@ describe.only('Noteful API - Notes', function () {
         });
     });
 
-    it.only('should return an error when `folderId` is not valid ', function () {
+    it('should return an error when `folderId` is not valid ', function () {
       const newItem = {
         title: 'What about dogs?!',
         content: 'Lorem ipsum dolor sit amet, sed do eiusmod tempor...',

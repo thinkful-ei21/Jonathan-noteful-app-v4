@@ -139,17 +139,16 @@ router.post('/', (req, res, next) => {
   Promise.all([
     validateFolderId(folderId, userId),
     validateTagIds(tags, userId)
-  ]);
-
-
-  const newNote = { title, content, folderId, tags, userId };
-
-  Note.create(newNote)
-    .then(result => {
-      res
-        .location(`${req.originalUrl}/${result.id}`)
-        .status(201)
-        .json(result);
+  ])
+    .then (()=> {
+      const newNote = { title, content, folderId, tags, userId };
+      Note.create(newNote)
+        .then(result => {
+          res
+            .location(`${req.originalUrl}/${result.id}`)
+            .status(201)
+            .json(result);
+        });
     })
     .catch(err => {
       next(err);
